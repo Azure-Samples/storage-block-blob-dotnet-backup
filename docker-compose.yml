@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  backup.utility:
+    image: ${DOCKER_REGISTRY}backuputility
+    build:
+      context: .
+      dockerfile: backup.utility/backup.utility/Dockerfile
