@@ -33,13 +33,16 @@ This project does not require any modification. It contains the logic of backup,
 This contains the main endpoint to start the backup process. This is a continuous running utility and performs the incremental backup every X second. It also creates a detailed log for you to monitor the backup process. It uses Serilog and stores the logs in Azure Table Storage. You can change it as needed. Here are the settings which are configurable. Highlighted settings are mandatory to change rest can can be left with default values
 
 **Connection Strings**
+
 | Key Name        | Description           |
 | ------------- |:-------------| 
 | **EventQueueStorage**      | This the connection string to storage account where the Azure Storage queue exists and where the azure storage events are being stored. | 
 | **SourceBlobStorage**      | This is the connection string of the source storage account for which the back-up needs to be performed. | 
 | **BackupTableStorage**      | This is the connection string of the storage account where the storage events for the incremental backup will be stored. The listener will read the event messages from the storage queue and will store the same here with some additional info. |
 | **BackupBlobStorage**      | This is the connection string of the destination storage account where the created/replaced/deleted block blobs are copied. |	
+
 **App Settings**
+
 | Key Name        | Description           |
 | ------------- |:-------------| 
 | **BackupTableName**      | Create a storage table manually in storage account mentioned in the “BackupTableStorage” connection string and specify the name of the same table here. | 
@@ -50,12 +53,14 @@ This contains the main endpoint to start the backup process. This is a continuou
 | TimerElapsedInMS      | Timer interval in milliseconds. On this timer click the listener reads the messages from event queue and copies the events metadata to table storage and copies the blobs from source storage account to destination storage account. |
 |IsServerCopy|	To perform server copy or Sync copy. In case the storage accounts are in VNET, you will have to keep this value to false. For server copy you can find more details [here](https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/12/introducing-asynchronous-cross-account-copy-blob/)| 	
 |**Serilog : connectionString**|This is the connection string of the storage account where the detailed diagnostic logs will be generated.| 	
+
 * ##### restore.utility	
 This utility is responsible for restoring the incremental backup. Before the incremental backup re-store, user will have to creates a new storage account manually where the data needs to be restored. User will also have to first move the full back up using AZCopy to the destination i.e. newly created storage account.
 User will have to initiate the restore process manually by giving the start date and end date for which data needs to be restored.
 For Example: Re-store process reads the data from the table storage for the period 01/08/2018 to 01/10/2018 sequentially to perform the re-store. The date format is mm/dd/yyyy
 
 **Connection Strings**
+
 | Key Name        | Description           |
 | ------------- |:-------------| 
 | **BackupTableStorage**      | This the connection string where you have created the table to store the event metadata. This should be same as “BackupTableStorage” from storage utility. |
@@ -63,6 +68,7 @@ For Example: Re-store process reads the data from the table storage for the peri
 | **RestoreBlobStorage**      | This is the connection string of a storage account where the restore will be performed. Please note you will have to first bring the full backup from the “fkbkp” folder using the AzCopy. |	
 
 **App Settings**
+
 | Key Name        | Description           |
 | ------------- |:-------------| 
 | **BackupTableName**      | Name of the Azure table name where the event metadata has been stored. This should be same as “BackupTableName” from storage utility. |
