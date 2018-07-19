@@ -72,8 +72,7 @@ For Example: Re-store process reads the data from the table storage for the peri
 | Key Name        | Description           |
 | ------------- |:-------------| 
 | **BackupTableName**      | Name of the Azure table name where the event metadata has been stored. This should be same as “BackupTableName” from storage utility. |
-| BlobSASExpiryInMts      | SAS Key Expiry in Minutes
-This is used in case of Server copy. |
+| BlobSASExpiryInMts      | SAS Key Expiry in Minutes. This is used in case of Server copy.| 
 | IsServerCopy      | To perform server copy or Sync copy. In case the storage accounts are in VNET, you will have to keep this value to false. For server copy you can find more details here. |
 | **Serilog : connectionString**      | This is the connection string of the storage account where the detailed diagnostic logs will be generated.|
 
