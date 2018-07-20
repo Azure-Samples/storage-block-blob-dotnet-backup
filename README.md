@@ -59,7 +59,7 @@ This contains the main endpoint to start the backup process. This is a continuou
 |**Serilog : connectionString**|This is the connection string of the storage account where the detailed diagnostic logs will be generated.| 	
 
 * ##### restore.utility	
-This utility is responsible for restoring the incremental backup. Before the incremental backup re-store, user will have to creates a new storage account manually where the data needs to be restored. User will also have to first move the full back up using AZCopy to the destination i.e. newly created storage account.
+This utility is responsible for restoring the incremental backup. Before the incremental backup re-store, user will have to create a new storage account manually where the data needs to be restored. User will also have to first move the full back up using AZCopy to the destination i.e. newly created storage account.
 User will have to initiate the restore process manually by giving the start date and end date for which data needs to be restored.
 For Example: Re-store process reads the data from the table storage for the period 01/08/2018 to 01/10/2018 sequentially to perform the re-store. The date format is mm/dd/yyyy
 
