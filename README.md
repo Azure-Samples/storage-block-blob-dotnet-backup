@@ -1,6 +1,6 @@
 # Sample Backup Solution for Azure Block Blobs
 
-Azure Blob storage doesn't offer an out of box solution for backing up block blobs. This sample can be used to perform daily incremental back-ups of a storage accounts containing block blobs. 
+Today, Azure Blob storage doesn't offer an out of box solution for backing up block blobs. This sample can be used to perform daily incremental back-ups of storage accounts containing block blobs. 
 
 In case of a disaster, the solution also provides an option to restore the storage account. 
 
