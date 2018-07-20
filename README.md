@@ -9,6 +9,10 @@ This project framework provides the following features:
 * Daily Incremental backup of storage account
 * Restore backup by providing start date and end date 
 
+## Prerequisites
+* Visual Studio 2017
+* Docker for Windows
+
 ## Instructions to Set-up Solution
 ### Set up Event Grid for Source Storage account.
 * Create an Azure storage queue first to store the event grid events. Please note this storage account containing the storage queue cannot be connected to VNET.
