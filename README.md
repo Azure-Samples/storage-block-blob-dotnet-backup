@@ -16,7 +16,7 @@ This project framework provides the following features:
 ## Instructions to Set-up Solution
 ### Set up Event Grid for Source Storage account.
 * Create an Azure storage queue first to store the event grid events. Please note this storage account containing the storage queue cannot be connected to VNET.
-* Create an event subscription for the storage account by firing the below command in the Azure Command Shell. Please note, this feature is still in preview and you will have to install the Event Grid extension for Azure CLI. You can install it with az extension add --name eventgrid. This step will make sure all the create, replace and delete events are recorded in the configured Azure Storage Queue. **Please note modifications to a BLOB are not recorded hence our solution won’t be able to support the same.**
+* Create an event subscription for the storage account by firing the below command in the Azure Command Shell. Please note, this feature is still in preview and you will have to install the Event Grid extension for Azure CLI. You can install it with _az extension add --name eventgrid_. This step will make sure all the create, replace and delete events are recorded in the configured Azure Storage Queue. **Please note modifications to a BLOB are not recorded hence our solution won’t be able to support the same.**
 
 ```
 az eventgrid event-subscription create \
