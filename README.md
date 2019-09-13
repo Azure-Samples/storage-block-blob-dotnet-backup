@@ -1,3 +1,13 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+description: "Today, Azure Blob storage doesn't offer an out of box solution for backing up block blobs."
+urlFragment: storage-block-blob-dotnet-backup
+---
+
 # Sample Backup Solution for Azure Block Blobs
 
 Today, Azure Blob storage doesn't offer an out of box solution for backing up block blobs. This sample can be used to perform daily incremental back-ups of storage accounts containing block blobs. 
