@@ -1,4 +1,4 @@
-﻿// 
+﻿//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+using System.Text.RegularExpressions;
 using backup.core.Interfaces;
 using backup.core.Models;
 using Microsoft.Extensions.Configuration;
@@ -57,7 +58,7 @@ namespace backup.core.Implementations
 
             string sourceStorageAccountConnectionString = _config.GetConnectionString("SourceBlobStorage");
 
-            bool isServerCopy =  bool.Parse(_config.GetSection("AppSettings")["IsServerCopy"]);
+            bool isServerCopy = bool.Parse(_config.GetSection("AppSettings")["IsServerCopy"]);
 
             if (eventData is BlobEvent<CreatedEventData>)
             {
@@ -73,12 +74,19 @@ namespace backup.core.Implementations
 
                 BlobEvent<CreatedEventData> createdEventData = (BlobEvent<CreatedEventData>)eventData;
 
+                //Resolves Microsoft AzureUSGovernment EventGrid Event Subscription Bug
                 string url = createdEventData.data.url;
+                var sourceBlockBlobUri = new Uri(url);
+                var endpointHostSuffix = new Regex("^.*\\.blob\\.(.*)$").Match(sourceStorageAccount.BlobEndpoint.Host).Groups[1].Value;
+                if (!sourceBlockBlobUri.Host.EndsWith(endpointHostSuffix))
+                {
+                    sourceBlockBlobUri = new Uri(url.Replace("core.windows.net", endpointHostSuffix));
+                }
 
-                CloudBlockBlob sourceBlockBlob = new CloudBlockBlob(new Uri(url),sourceBlobClient);
+                CloudBlockBlob sourceBlockBlob = new CloudBlockBlob(new Uri(url), sourceBlobClient);
 
                 bool sourceBlobExists = await sourceBlockBlob.ExistsAsync();
-                
+
                 if (sourceBlobExists)
                 {
                     long blobSize = sourceBlockBlob.Properties.Length;
@@ -92,7 +100,7 @@ namespace backup.core.Implementations
                     CloudBlobContainer destinationContainer = destinationBlobClient.GetContainerReference(destinationContaninerName);
 
                     bool result = await destinationContainer.CreateIfNotExistsAsync();
-                    
+
                     CloudBlockBlob destinationBlob = destinationContainer.GetBlockBlobReference(destinationBlobName);
 
                     string copyResult = string.Empty;
@@ -114,7 +122,7 @@ namespace backup.core.Implementations
 
                         await TransferManager.CopyAsync(sourceBlockBlob, destinationBlob, false);
                     }
-                   
+
                     destinationBlobInfo = new DestinationBlobInfo();
 
                     destinationBlobInfo.ContainerName = destinationContainer.Name;
@@ -126,7 +134,7 @@ namespace backup.core.Implementations
                     destinationBlobInfo.OrgContainerName = sourceBlockBlob.Container.Name;
 
                     destinationBlobInfo.OrgBlobName = sourceBlockBlob.Name;
-                    
+
                     return destinationBlobInfo;
                 }
                 else
@@ -269,7 +277,7 @@ namespace backup.core.Implementations
 
             return false;
         }
-        
+
         /// <summary>
         /// GenerateSASBlobToken
         /// </summary>
