@@ -1,7 +1,7 @@
-FROM microsoft/dotnet:2.0-runtime AS base
+FROM mcr.microsoft.com/dotnet/core/runtime:2.1 AS base
 WORKDIR /app
 
-FROM microsoft/dotnet:2.0-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS build
 WORKDIR /src
 COPY backup.utility/backup.utility/backup.utility.csproj backup.utility/backup.utility/
 COPY backup.core/backup.core.csproj backup.core/
